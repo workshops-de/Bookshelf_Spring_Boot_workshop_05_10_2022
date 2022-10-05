@@ -1,0 +1,60 @@
+<configuration scan="true" scanPeriod="10 seconds" debug="false">
+    <springProfile name="default"><!-- no date, ansi colored, no file output -->
+        <property name="PATTERN"
+                  value="%green(%d{HH:mm:ss.SSS}) [%X{user}] %highlight(%-5level) %highlight(%48.48logger) - %msg%n"/>
+    </springProfile>
+    <springProfile name="prod"><!-- no color, but file output -->
+        <property name="PATTERN"
+                  value="%d{dd.MM.yyyy HH:mm:ss.SSS} [%X{user}] [%thread] %-5level %logger{36} - %msg%n"/>
+        <property name="LOGFILE" value="workshop"/>
+    </springProfile>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <springProfile name="prod"><!-- no color, but file output -->
+        <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${LOGFILE}.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!-- Daily rollover -->
+                <fileNamePattern>${LOGFILE}_%d{yyyy-MM-dd}.log</fileNamePattern>
+                <maxHistory>30</maxHistory>
+            </rollingPolicy>
+            <encoder>
+                <pattern>${PATTERN}</pattern>
+            </encoder>
+        </appender>
+    </springProfile>
+
+    <!-- For all those not explicitly defined below use this log level: -->
+    <root level="info">
+        <springProfile name="default, jenkins">
+            <appender-ref ref="STDOUT"/>
+        </springProfile>
+        <springProfile name="prod">
+            <appender-ref ref="FILE"/>
+        </springProfile>
+    </root>
+
+    <logger name="de.workshops" level="debug"/>
+
+    <!-- Log levels: trace, debug, info, warn, error, off -->
+    <logger name="liquibase" level="warn"/>
+    <logger name="org.springframework" level="warn"/>
+    <logger name="com.zaxxer.hikari" level="info"/>
+    <logger name="org.apache" level="warn"/>
+
+    <logger name="org.hibernate" level="warn"/>
+    <logger name="org.hibernate.SQL" level="warn"/>
+    <logger name="org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator"
+            level="debug"/> <!-- database connections -->
+
+    <logger name="org.springframework.boot" level="info" />
+    <logger name="org.springframework.boot.devtools" level="warn" />
+    <logger name="org.springframework.security" level="info" />
+    <!-- <logger name="org.springframework.test" level="debug" /> -->
+    <logger name="org.springframework.web" level="debug"/>
+</configuration>
