@@ -1,0 +1,8 @@
+application:
+  title: ${APPLICATION_TITLE:Bookshelf}
+  version: 0.0.1
+
+bookshelf:
+  some-number: 11
+  some-text: More information
+

@@ -32,6 +32,10 @@ public class BookService {
                 .toList();
     }
 
+    public Book createBook(Book book) {
+        return bookRepository.save(book);
+    }
+
     private boolean hasIsbn(Book book, String isbn) {
         return book.getIsbn().equals(isbn);
     }

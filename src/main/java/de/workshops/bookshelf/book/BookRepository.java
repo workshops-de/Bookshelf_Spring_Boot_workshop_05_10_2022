@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +25,7 @@ public class BookRepository {
     @PostConstruct
     void init() {
         try {
-            this.books = Arrays.asList(mapper.readValue(new File("target/classes/books.json"), Book[].class));
+            this.books = new ArrayList<>(Arrays.asList(mapper.readValue(new File("target/classes/books.json"), Book[].class)));
         } catch (IOException e) {
             log.error(e.getMessage());
         }
@@ -32,5 +33,16 @@ public class BookRepository {
 
     public List<Book> getBooks() {
         return this.books;
+    }
+
+    public Book save(Book book) {
+        Book bookToSave = Book.builder()
+                .isbn(book.getIsbn())
+                .title(book.getTitle())
+                .author(book.getAuthor())
+                .build();
+        this.books.add(bookToSave);
+
+        return bookToSave;
     }
 }
