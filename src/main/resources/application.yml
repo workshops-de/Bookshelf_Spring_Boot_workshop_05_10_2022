@@ -6,3 +6,22 @@ bookshelf:
   some-number: 11
   some-text: More information
 
+spring:
+  datasource:
+    url: jdbc:h2:./testdb;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  sql:
+    init:
+      mode: always
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  h2:
+    console:
+      enabled: true
+  liquibase:
+    drop-first: true

@@ -14,19 +14,19 @@ public class BookService {
     private final BookRepository bookRepository;
 
     public List<Book> getBooks() {
-        return bookRepository.getBooks();
+        return bookRepository.findAll();
     }
 
     public Book getSingleBook(String isbn) throws BookException {
-        return bookRepository.getBooks().stream().filter(book -> hasIsbn(book, isbn)).findFirst().orElseThrow(BookException::new);
+        return bookRepository.findAll().stream().filter(book -> hasIsbn(book, isbn)).findFirst().orElseThrow(BookException::new);
     }
 
     public Book searchBookByAuthor(String author) throws BookException {
-        return bookRepository.getBooks().stream().filter(book -> hasAuthor(book, author)).findFirst().orElseThrow(BookException::new);
+        return bookRepository.findAll().stream().filter(book -> hasAuthor(book, author)).findFirst().orElseThrow(BookException::new);
     }
 
     public List<Book> searchBooks(BookSearchRequest request) {
-        return bookRepository.getBooks().stream()
+        return bookRepository.findAll().stream()
                 .filter(book -> hasAuthor(book, request.getAuthor()))
                 .filter(book -> hasIsbn(book, request.getIsbn()))
                 .toList();
