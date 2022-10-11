@@ -25,3 +25,7 @@ spring:
       enabled: true
   liquibase:
     drop-first: true
+  security:
+    user:
+      name: workshops
+      password: workshops
