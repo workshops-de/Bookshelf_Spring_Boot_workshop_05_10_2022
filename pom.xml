@@ -16,7 +16,7 @@
 	<properties>
 		<java.version>17</java.version>
 		<snakeyaml.version>1.33</snakeyaml.version><!-- See https://github.com/spring-projects/spring-boot/issues/32221 -->
-		<springdoc-openapi-ui.version>1.6.13</springdoc-openapi-ui.version>
+		<springdoc-openapi-ui.version>1.6.15</springdoc-openapi-ui.version>
 	</properties>
 	<dependencies>
 		<dependency>
